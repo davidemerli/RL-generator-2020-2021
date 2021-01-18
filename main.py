@@ -1,5 +1,6 @@
 from math import floor, log2
 from random import randint
+import numpy as np
 
 
 def solve_batch(batch):
@@ -27,7 +28,7 @@ def generate_batch(cols, rows):
     The first two elements are the image dimensions as specified in the document
     """
 
-    return [cols, rows] + [randint(0, 256) for _ in range(rows * cols)]
+    return [cols, rows] + [randint(0, 255) for _ in range(rows * cols)]
 
 
 def print_image(ram):
@@ -54,9 +55,6 @@ def generate_ram(cols, rows):
 
     batch = generate_batch(cols, rows)
     return batch + solve_batch(batch)
-
-
-cols, rows = 4, 3
 
 
 def examples():
@@ -101,7 +99,7 @@ def generate_raw_tests(to_generate=10):
             test_file.write(f'{i + 1}) {" ".join([str(x) for x in ram])}\n')
 
 
-def pretty_print_ram(ram):
+def pretty_print_ram(cols, rows, ram):
     """
     Pretty prints a single ram configuration into 'tests.txt' and 'solution.txt'.
     VHDL code snippets are written, to be copied and pasted into a test-bench file in Vivado.
@@ -127,7 +125,7 @@ def pretty_print_ram(ram):
         sol_file.write(f'found \" & integer\'image(to_integer(unsigned(RAM({element_position}))))  ')
         sol_file.write(f'severity failure;\n')
 
-    print(f'Generated "test.txt" and "solution.txt" for a test with {bytes_length} bytes.')
+    print(f'Generated "test.txt" and "solution.txt" for a test with cols:{cols} and rows:{rows}.')
 
 
 def main():
@@ -135,11 +133,11 @@ def main():
     # generate_raw_tests()
 
     # Generate a single random test
-    cols, rows = randint(1, 128), randint(1, 128)
+    cols, rows = randint(1, 4), randint(1, 4)
     ram = generate_ram(cols, rows)
 
     # Pretty print into VHDL code snippets
-    pretty_print_ram(ram)
+    pretty_print_ram(cols, rows, ram)
 
 
 if __name__ == '__main__':
