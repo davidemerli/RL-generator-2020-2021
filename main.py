@@ -133,7 +133,7 @@ def main():
     # generate_raw_tests()
 
     # Generate a single random test
-    cols, rows = randint(1, 4), randint(1, 4)
+    cols, rows = randint(1, 128), randint(1, 128)
     ram = generate_ram(cols, rows)
 
     # Pretty print into VHDL code snippets
