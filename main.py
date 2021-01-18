@@ -28,7 +28,7 @@ def generate_batch(cols, rows):
     The first two elements are the image dimensions as specified in the document
     """
 
-    return [cols, rows] + [randint(0, 255) for _ in range(rows * cols)]
+    return [cols, rows] + [randint(0, 256) for _ in range(rows * cols)]
 
 
 def print_image(ram):
@@ -99,14 +99,14 @@ def generate_raw_tests(to_generate=10):
             test_file.write(f'{i + 1}) {" ".join([str(x) for x in ram])}\n')
 
 
-def pretty_print_ram(cols, rows, ram):
+def pretty_print_ram(ram, num_test):
     """
-    Pretty prints a single ram configuration into 'tests.txt' and 'solution.txt'.
+    Pretty prints a single ram configuration into 'tests.txt' and 'soluion.txt'.
     VHDL code snippets are written, to be copied and pasted into a test-bench file in Vivado.
     """
 
-    test_file = open('test.txt', 'w')
-    sol_file = open('solution.txt', 'w')
+    test_file = open(f'test{num_test}.txt', 'w')
+    sol_file = open(f'solution{num_test}.txt', 'w')
 
     bytes_length = int(len(ram) / 2 - 1)
     test_file.write(f'{bytes_length}\n')
@@ -125,7 +125,7 @@ def pretty_print_ram(cols, rows, ram):
         sol_file.write(f'found \" & integer\'image(to_integer(unsigned(RAM({element_position}))))  ')
         sol_file.write(f'severity failure;\n')
 
-    print(f'Generated "test.txt" and "solution.txt" for a test with cols:{cols} and rows:{rows}.')
+    print(f'Generated "test{num_test}.txt" and "solution{num_test}.txt" for a test with {bytes_length} bytes.')
 
 
 def main():
@@ -133,11 +133,13 @@ def main():
     # generate_raw_tests()
 
     # Generate a single random test
-    cols, rows = randint(1, 128), randint(1, 128)
-    ram = generate_ram(cols, rows)
+    num_tests = int(input("How many tests do you want to generate?: "))
+    for i in range(1, num_tests + 1):
+        cols, rows = randint(1, 128), randint(1, 128)
+        ram = generate_ram(cols, rows)
 
-    # Pretty print into VHDL code snippets
-    pretty_print_ram(cols, rows, ram)
+        # Pretty print into VHDL code snippets
+        pretty_print_ram(ram, i)
 
 
 if __name__ == '__main__':
