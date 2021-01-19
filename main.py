@@ -28,7 +28,7 @@ def generate_batch(cols, rows):
     The first two elements are the image dimensions as specified in the document
     """
 
-    return [cols, rows] + [randint(0, 256) for _ in range(rows * cols)]
+    return [cols, rows] + [randint(0, 255) for _ in range(rows * cols)]
 
 
 def print_image(ram):
@@ -99,9 +99,9 @@ def generate_raw_tests(to_generate=10):
             test_file.write(f'{i + 1}) {" ".join([str(x) for x in ram])}\n')
 
 
-def pretty_print_ram(ram, num_test):
+def pretty_print_ram(ram, num_test, cols, rows):
     """
-    Pretty prints a single ram configuration into 'tests.txt' and 'soluion.txt'.
+    Pretty prints a single ram configuration into 'tests.txt' and 'solution.txt'.
     VHDL code snippets are written, to be copied and pasted into a test-bench file in Vivado.
     """
 
@@ -125,7 +125,7 @@ def pretty_print_ram(ram, num_test):
         sol_file.write(f'found \" & integer\'image(to_integer(unsigned(RAM({element_position}))))  ')
         sol_file.write(f'severity failure;\n')
 
-    print(f'Generated "test{num_test}.txt" and "solution{num_test}.txt" for a test with {bytes_length} bytes.')
+    print(f'Generated "test{num_test}.txt" and "solution{num_test}.txt" for a test cols:{cols} and rows:{rows}.')
 
 
 def main():
@@ -139,7 +139,7 @@ def main():
         ram = generate_ram(cols, rows)
 
         # Pretty print into VHDL code snippets
-        pretty_print_ram(ram, i)
+        pretty_print_ram(ram, i, cols, rows)
 
 
 if __name__ == '__main__':
