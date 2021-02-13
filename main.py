@@ -1,6 +1,5 @@
 from math import floor, log2
 from random import randint
-from pathlib import Path
 import numpy as np
 
 
@@ -126,7 +125,6 @@ def pretty_print_ram(ram, num_test, cols, rows):
         sol_file.write(f'found \" & integer\'image(to_integer(unsigned(RAM({element_position}))))  ')
         sol_file.write(f'severity failure;\n')
 
-
     print(f'Generated "test{num_test}.txt" and "solution{num_test}.txt" for a test cols:{cols} and rows:{rows}.')
 
 def generate_vhd_testbench(ram, num_test, cols, rows):
@@ -134,7 +132,7 @@ def generate_vhd_testbench(ram, num_test, cols, rows):
     Automatically generate a .vhd test bench that can be imported in Vivado
     """
 
-    test_bench = open(f'test{num_test}.txt', 'w')
+    test_bench = open(f'test{num_test}.vhd', 'w')
     bytes_length = int(len(ram) / 2 - 1)
 
     test_bench.write("library ieee;\n")
@@ -233,10 +231,6 @@ def generate_vhd_testbench(ram, num_test, cols, rows):
     test_bench.write("    assert false report \"Simulation Ended! TEST PASSATO\" severity failure;\n")
     test_bench.write("end process test;\n")
     test_bench.write("end projecttb;\n")
-
-    test_bench.close()
-    p = Path(f'test{num_test}.txt')
-    p.rename(p.with_suffix('.vhd'))
 
     print(f'Generated "test{num_test}.vhd" for a test cols:{cols} and rows:{rows}.')
 
