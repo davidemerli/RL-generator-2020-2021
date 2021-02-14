@@ -1,5 +1,5 @@
 
--- I path da cambiare sono alle righe 67, 92, 93 -
+-- I path da cambiare sono alle righe 68, 101, 102 -
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -107,7 +107,7 @@ test : process is
 begin 
 wait for 100 ns;
     loop
------------------------------------------------------- TEST SINGOLO START  ------------------------------------------------------ 
+ 
     count := count + 1;
     if (s_read_done) then exit; end if;
     s_read <= true; -- richiesta di modifica valori ram
