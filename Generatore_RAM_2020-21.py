@@ -51,6 +51,12 @@ def main():
             for elem in each_test:
                 w.write(str(elem)+"\n")
 
+    with open('valori_test.txt', 'w') as w:
+        num = 1
+        for each_test in test:
+            w.write(str(num) + ") Colonne: " + str(each_test[1]) + " - Righe: " + str(each_test[2]) + " - Numero pixel: " + str(each_test[0])+ "\n")
+            num = num + 1
+
 if __name__ == '__main__':
 
     main()
