@@ -139,6 +139,7 @@ wait for 100 ns;
         writeline(err_write_file, err_write_line);
         errors := true;
     end if;
+	passed := true;
     ---------- fine casi di test ---------- 
     end loop;
     if(not errors) then 
