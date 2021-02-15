@@ -52,7 +52,5 @@ def main():
                 w.write(str(elem)+"\n")
 
 if __name__ == '__main__':
-    # UNCOMMENT THIS TO SHOW EXAMPLE
-    # examples()
 
     main()
