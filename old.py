@@ -1,6 +1,5 @@
 from math import floor, log2
 from random import randint
-import numpy as np
 
 
 def solve_batch(batch):
@@ -31,23 +30,6 @@ def generate_batch(cols, rows):
     return [cols, rows] + [randint(0, 255) for _ in range(rows * cols)]
 
 
-def print_image(ram):
-    """
-    Given a list representing ram values, visualizes the image before and after the equalization.
-    Not needed for generation purposes.
-    """
-
-    image = np.array(ram[2:-len(ram)//2 + 1])
-    image = image.reshape(ram[1], ram[0])
-
-    print(image)
-
-    image = np.array(ram[2 + len(ram)//2 - 1:])
-    image = image.reshape(ram[1], ram[0])
-
-    print(image)
-
-
 def generate_ram(cols, rows):
     """
     Generates ram values for a random test case
@@ -55,33 +37,6 @@ def generate_ram(cols, rows):
 
     batch = generate_batch(cols, rows)
     return batch + solve_batch(batch)
-
-
-def examples():
-    """
-    Prints example batches + solves from specification document
-    """
-
-    # example batch 1
-    batch = [4, 3, 76, 131, 109, 89, 46, 121, 62, 59, 46, 77, 68, 94]
-
-    print('\n\nbatch 1\n')
-    ram = batch + solve_batch(batch)
-    print_image(ram)
-
-    # example batch 2
-    batch = [4, 3, 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120]
-
-    print('\n\nbatch 2\n')
-    ram = batch + solve_batch(batch)
-    print_image(ram)
-
-    # example batch 3
-    batch = [4, 3, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133]
-
-    print('\n\nbatch 3\n')
-    ram = batch + solve_batch(batch)
-    print_image(ram)
 
 
 def generate_raw_tests(to_generate=10):
@@ -126,6 +81,7 @@ def pretty_print_ram(ram, num_test, cols, rows):
         sol_file.write(f'severity failure;\n')
 
     print(f'Generated "test{num_test}.txt" and "solution{num_test}.txt" for a test cols:{cols} and rows:{rows}.')
+
 
 def generate_vhd_testbench(ram, num_test, cols, rows):
     """
@@ -222,7 +178,8 @@ def generate_vhd_testbench(ram, num_test, cols, rows):
     test_bench.write("    wait for 100 ns;\n")
 
     for element_position in range(bytes_length + 2, 2 * bytes_length + 2):
-        test_bench.write(f'\tassert RAM({element_position}) = std_logic_vector(to_unsigned({ram[element_position]}, 8))')
+        test_bench.write(
+            f'\tassert RAM({element_position}) = std_logic_vector(to_unsigned({ram[element_position]}, 8))')
         test_bench.write(f' report \"TEST FALLITO (WORKING ZONE). ')
         test_bench.write(f'Expected  {ram[element_position]}  ')
         test_bench.write(f'found \" & integer\'image(to_integer(unsigned(RAM({element_position}))))  ')
@@ -233,6 +190,7 @@ def generate_vhd_testbench(ram, num_test, cols, rows):
     test_bench.write("end projecttb;\n")
 
     print(f'Generated "test{num_test}.vhd" for a test cols:{cols} and rows:{rows}.')
+
 
 def main():
     # UNCOMMENT TO GENERATE RAW TESTS
@@ -254,8 +212,6 @@ def main():
             # Pretty print into VHDL code snippets
             pretty_print_ram(ram, i, cols, rows)
 
-if __name__ == '__main__':
-    # UNCOMMENT THIS TO SHOW EXAMPLE
-    # examples()
 
+if __name__ == '__main__':
     main()
