@@ -104,6 +104,8 @@ ram = generate_ram(cols, rows)
 # Pretty print into VHDL code snippets
 pretty_print_ram(ram)
 ```
+-->
 
 ### Credits
-Pretty print function by [Daniele Locatelli](https://github.com/locadani) -->
+Pretty print function by [Daniele Locatelli](https://github.com/locadani)
+Importing RAM from outside feature by [Davide Mornatta](https://github.com/davidemornatta)
