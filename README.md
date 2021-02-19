@@ -108,4 +108,7 @@ pretty_print_ram(ram)
 
 ### Credits
 Pretty print function by [Daniele Locatelli](https://github.com/locadani)
+
 Importing RAM from outside feature by [Davide Mornatta](https://github.com/davidemornatta)
+
+Original testbench code by [Mark Zampedroni](https://github.com/Mark-Zampedroni) [here](https://github.com/Mark-Zampedroni/multi-TB-progetto-Reti-PoliMi)
