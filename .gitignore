@@ -3,3 +3,4 @@ generator/
 pyvenv.cfg
 ram_content.txt
 test_values.txt
+venv
