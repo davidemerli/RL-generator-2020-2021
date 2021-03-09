@@ -54,7 +54,7 @@ python generator.py --size 1000 --limit 16
 
 ### How to import in Vivado
 
-You can directly import the ```gen_testbench.vhd``` file as source in Vivado, then modify this file to match the folder containing the generated ram files. Instruction on how to modify it are included in the .vhd file itself.
+You can directly import the ```gen_testbench_reset.vhd``` (or ```gen_testbench_no_reset.vhd```) file as source in Vivado, then modify this file to match the folder containing the generated ram files. Instruction on how to modify it are included in the .vhd file itself.
 
 <!-- #### Example output
 test.txt:
