@@ -105,6 +105,10 @@ begin
     variable errors                     : boolean := false;
   begin
     wait for 100 ns;
+	wait for c_CLOCK_PERIOD;
+    tb_rst <= '1';
+    wait for c_CLOCK_PERIOD;
+    tb_rst <= '0';
     loop
 
       count := count + 1;
@@ -116,10 +120,6 @@ begin
       s_read <= true; -- richiesta di modifica valori ram
       wait for c_CLOCK_PERIOD;
       s_read <= false;
-      wait for c_CLOCK_PERIOD;
-      tb_rst <= '1';
-      wait for c_CLOCK_PERIOD;
-      tb_rst <= '0';
       wait for c_CLOCK_PERIOD;
       tb_start <= '1';
       wait for c_CLOCK_PERIOD;
