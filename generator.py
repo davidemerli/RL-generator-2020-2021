@@ -1,5 +1,5 @@
 from math import floor, log2
-from random import randint
+from random import randint, gauss
 from tqdm import tqdm
 import click
 
@@ -10,7 +10,10 @@ def generate_batch(cols, rows):
     The first two elements are the image dimensions as specified in the document
     """
 
-    return [cols, rows] + [randint(0, 255) for _ in range(rows * cols)]
+    def clamp(value):
+        return max(min(floor(value), 255), 0)
+
+    return [cols, rows] + [clamp(gauss(127, 30)) for _ in range(rows * cols)]
 
 
 def solve_batch(batch):
